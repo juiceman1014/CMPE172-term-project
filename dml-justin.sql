@@ -11,12 +11,14 @@ FROM Customer C, Advertising A
 WHERE C.AdvertisingID = A.AdvertisingID;
 
 -- intermediate query 1
+-- Find every customer that left a review
 SELECT C.Name, R.DateOfReview, R.Description, R.Stars
 FROM Customer C
 LEFT JOIN Review R ON C.CustomerID=R.CustomerID
 ORDER BY R.Stars DESC;
 
 -- intermediate query 2
+-- Find the amount of times each menu item has been sold
 SELECT M.Name, SUM(O.Quantity) AS TimesSold
 FROM Menu M
 INNER JOIN OrderItem O ON M.MenuItemID=O.MenuItemID
