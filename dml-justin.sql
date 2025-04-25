@@ -26,6 +26,26 @@ GROUP BY M.name
 ORDER BY TimesSold DESC;
 
 -- advanced query 1
+-- How many times was a manager responsible for an expense
+SELECT M.Name, E.ExpenseResponsible
+FROM Management M
+JOIN (
+	SELECT ManagerID, COUNT(*) AS ExpenseResponsible
+	FROM Expense
+	GROUP BY ManagerID
+) AS E ON M.ManagerID = E.ManagerID
+ORDER BY E.ExpenseResponsible DESC;
 
 
 -- advanced query 2
+-- How many of each dish has a city ordered
+SELECT City, Dish, TimesOrdered
+FROM (
+	SELECT C.CityOfResidence AS City, M.Name AS Dish, SUM(O.Quantity) AS TimesOrdered
+	FROM Customer C
+	JOIN CustomerOrder CO ON C.CustomerID = CO.CustomerID
+	JOIN OrderItem O ON CO.OrderID = O.OrderID
+	JOIN Menu M ON O.MenuItemID = M.MenuItemID
+	GROUP BY C.CityOfResidence, M.Name
+) AS DishByCity
+ORDER BY City ASC, TimesOrdered DESC;
