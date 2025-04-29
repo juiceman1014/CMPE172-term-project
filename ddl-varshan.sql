@@ -38,13 +38,15 @@ JOIN   OrderItem     OI ON CO.OrderID    = OI.OrderID
 GROUP  BY CO.OrderID, C.Name, CO.DateDined
 ORDER  BY CO.DateDined DESC;
 
-/* 3 ▸  Total expense dollars handled by each manager */
-SELECT M.Name AS ManagerName,
-       SUM(E.Amount) AS TotalExpenses
-FROM   Management M
-JOIN   Expense    E ON M.ManagerID = E.ManagerID
-GROUP  BY M.Name
-ORDER  BY TotalExpenses DESC;
+/* 3. Intermediate ▸ list every manager and the total expenses they have approved */
+SELECT  M.Name AS ManagerName,
+        COALESCE(SUM(E.Amount), 0) AS TotalExpenses
+FROM    Expense     E
+RIGHT JOIN Management M
+       ON M.ManagerID = E.ManagerID
+GROUP   BY M.Name
+ORDER   BY TotalExpenses DESC;
+
 
 
 
