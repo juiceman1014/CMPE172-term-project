@@ -103,8 +103,7 @@ WHERE m.Price * s.TotalQty >
                 GROUP  BY m2.MenuItemID, m2.Price
              ) AS ir
       )
-ORDER BY Revenue DESC
-LIMIT 5;
+ORDER BY Revenue DESC;
 
 
 /* 3 ▸  Cities whose average order total is above the restaurant-wide average */
